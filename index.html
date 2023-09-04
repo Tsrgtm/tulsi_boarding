@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/24f74c1771.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<style>
+    main {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #fdc874, #ffdaa2, #fbc76e);
+        background-size: cover;
+    }
+
+    .btn {
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 16px 40px;
+        border-radius: 500px;
+        display: inline-block;
+        font-weight: 500;
+        transition: all 0.4s ease-in-out;
+        background-size: 152% 100%;
+        background: #4ecdc4;
+        border: 2px solid #4ecdc4;
+        width: fit-content;
+    }
+
+    .btn:hover {
+        background: transparent;
+        border-color: #4ecdc4;
+        color: #4ecdc4;
+    }
+
+    .front-intro {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-left: 10%;
+        min-height: 80vh;
+    }
+
+    .front-intro h1 {
+        color: #1f1f25;
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 1.2;
+        text-transform: inherit;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .front-intro h1 span {
+        color: #4ecdc4;
+    }
+
+    .front-intro p {
+        max-width: 40%;
+        color: #202020;
+        margin-top: 25px;
+        margin-bottom: 30px;
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .mission {
+        background-color: #333;
+        color: #fff;
+        padding: 80px 0;
+        min-height: 100vh;
+    }
+
+    .mission h2 {
+        color: #4ecdc4;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .mission h2,
+    .mission p {
+        margin-left: 10%;
+        width: 80%;
+    }
+
+    .mission p {
+        margin-bottom: 4px;
+    }
+
+
+    .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .gallery figure {
+        margin: 5px;
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+        width: 250px;
+        height: 250px;
+        
+    }
+
+    .gallery img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: cover;
+        transition: transform .5s ease-in, filter .3s ease;
+    }
+
+    .gallery img:hover {
+        transform: scale(1.1);
+        filter: brightness(1);
+    }
+
+    .gallery img:not(:hover) {
+        filter: brightness(0.8);
+    }
+
+
+    .why-choose-us {
+        background-color: #e63946;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .why-choose-us h2 {
+        font-size: 32px;
+        margin-bottom: 30px;
+        color: white;
+    }
+
+    .choose-us-list {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .choose-us-item {
+        flex: 1;
+        max-width: 23%;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        text-align: left;
+        border-radius: 8px;
+    }
+
+    .choose-us-item i {
+        font-size: 48px;
+        color: #4ecdc4;
+    }
+
+    .choose-us-item h3 {
+        font-size: 20px;
+        margin: 10px 0;
+        color: #333;
+    }
+
+    .choose-us-item p {
+        font-size: 16px;
+        color: #666;
+    }
+
+    .why-us-content {
+        margin-left: 15%;
+        max-width: 70%;
+        padding: 60px 0;
+        text-align: center;
+        color: white;
+    }
+
+    .why-us-content ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .why-us-content li {
+        font-size: 16px;
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .why-us-content i {
+        color: #4ecdc4;
+        margin-right: 10px;
+        font-size: 20px;
+    }
+
+
+    .method-info:hover,
+    .program-info:hover {
+        transform: translateY(-5px);
+    }
+
+    .teaching-methods,
+    .program {
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    .teaching-methods h2,
+    .program h2 {
+        font-size: 32px;
+        margin-bottom: 30px;
+        color: black;
+    }
+
+    .method-list,
+    .program-list {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .method-info,
+    .program-info {
+        flex: 1;
+        max-width: 18%;
+        padding: 20px;
+        background-color: #f5f5f5;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        text-align: left;
+        border-radius: 10px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .method-info i,
+    .program-info i {
+        font-size: 48px;
+        color: #007BFF;
+    }
+
+    .method-info h3,
+    .program-info h3 {
+        font-size: 20px;
+        margin: 10px 0;
+        color: #333;
+    }
+
+    .method-info p,
+    .program-info p {
+        font-size: 16px;
+        color: #666;
+    }
+
+
+    .contact-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        background-color: #333;
+    }
+
+    .contact-form, .contact-details {
+        border-radius: 10px;
+        padding: 20px;
+        width: 40%;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 32px;
+        margin-bottom: 30px;
+        color: white;
+        text-align: center;
+    }
+
+    /* Contact Form Styles */
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-container {
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-weight: bold;
+        color: white;
+    }
+
+    input, textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #505050;
+    }
+
+    .success-message {
+        color: #009900;
+        margin-top: 10px;
+        display: none;
+    }
+
+    /* Contact Details Styles */
+    .contact-details ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .contact-details li {
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    /* Map Styles */
+    #map {
+        width: 100%;
+        height: 250px;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+
+    @media screen and (max-width: 768px) {
+
+        .front-intro {
+            padding-left: 5%;
+        }
+
+        .front-intro h1 {
+            font-size: 36px;
+        }
+
+        .front-intro p {
+            max-width: 70%;
+        }
+
+        .choose-us-list {
+            max-width: 100%;
+            flex-direction: column;
+        }
+
+        .choose-us-item {
+            max-width: 100%;
+        }
+
+        .method-list,
+        .program-list {
+            max-width: 100%;
+            flex-direction: column;
+        }
+
+        .method-info,
+        .program-info {
+            max-width: 100%;
+        }
+
+        .contact-container {
+            flex-direction: column;
+        }
+
+        .contact-form, .contact-details {
+            width: 100%;
+        }
+    }
+
+</style>
+<title>Your School Page</title>
+</head>
+<body>
+    <main id="home">
+        <header>
+            <div class="container">
+                <div class="logo">
+                    <a href="#home">TBSS</a>
+                </div>
+                <div class="menu-toggle">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#why-us">Why Us</a></li>
+                        <li><a href="#academics">Academics</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div class="front-intro">
+            <h1>Welcome to <span>TBSS</span></h1>
+            <p>Join us in shaping a brighter future. Explore our programs, discover your passions, and embark on a journey of discovery and growth. Your adventure in learning begins now.</p>
+            <a href="#academics"><button class="btn">EXplore More</button></a>
+        </div>
+    </main>
+
+
+    <section class="mission" id="about">
+        <h2>Our Story</h2>
+        <p>Tulsi Boarding Secondary School was established in 1987 AD (2044 BS) by "Mr. Bhisma Bahadur Khatri" with the aim to provide quality education to students. Over the decades, it has grown to become a privately owned academic institute located in Tulsipur, Dang district of Nepal.</p>
+        <p>We are affiliated with the (NEB) National Examinations Board and approved by the Ministry of Education, Nepal. Our commitment is to offer Ten plus Two (+2) programs in Science and Management streams, aiming to prepare students for a successful academic and professional journey.</p>
+        <p>Tulsi Boarding Secondary School, Tulsipur, Dang provides education from the basic to Ten Plus Two (Secondary - +2) level with moderate fee structures. We believe in inclusivity and provide various scholarship schemes for deserving, hardworking, and underprivileged students in our community, ensuring that education remains accessible to all.</p>
+        <p>Our facilities go beyond the classroom to provide a holistic learning experience for our students. We offer state-of-the-art amenities such as a well-equipped sports complex, an extensive library, a modern computer lab, a fully-equipped science lab, and a wide range of extra-curricular activities (ECA) to nurture talents beyond academics. Our cafeteria provides nutritious meals, and the conference hall is a space for intellectual exchange. We utilize multimedia resources for interactive learning, organize educational tours to enhance practical knowledge, and maintain well-equipped classrooms for a conducive learning environment. We also conduct regular testing to assess students' progress, offer counseling services for their well-being, and provide scholarships to support their educational pursuits.</p>
+        <p>At Tulsi Boarding Secondary School, we are committed to nurturing well-rounded individuals who are not only academically competent but also equipped with the skills, values, and knowledge to excel in a rapidly changing world.</p>
+    
+        <div class="gallery">
+            <figure>
+                <img src="images/all teachers.jpg" alt="Image 1">
+            </figure>
+            <figure>
+                <img src="images/Bhisma sir.jpg" alt="Image 2">
+            </figure>
+            <figure>
+                <img src="images/school.jpg" alt="Image 1">
+            </figure>
+            <figure>
+                <img src="images/football.jpg" alt="Image 2">
+            </figure>
+        </div>
+
+    </section>
+
+
+    <section class="why-choose-us" id="why-us">
+        <h2>Why Choose Us</h2>
+        <div class="container">
+            <div class="choose-us-list">
+                <div class="choose-us-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Exceptional Education</h3>
+                    <p>We provide exceptional education with a focus on academic excellence, fostering a love for learning, and nurturing critical thinking skills.</p>
+                </div>
+                <div class="choose-us-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3>Dedicated Faculty</h3>
+                    <p>Our dedicated and experienced faculty members are committed to inspiring and guiding students on their educational journey.</p>
+                </div>
+                <div class="choose-us-item">
+                    <i class="fas fa-building"></i>
+                    <h3>State-of-the-Art Facilities</h3>
+                    <p>Enjoy modern, well-equipped facilities that create a dynamic and engaging environment for both learning and personal growth.</p>
+                </div>
+                <div class="choose-us-item">
+                    <i class="fas fa-users"></i>
+                    <h3>Inclusive Community</h3>
+                    <p>We celebrate diversity and inclusivity, creating a supportive community where every student's unique talents and perspectives are valued.</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="why-us-content">
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> A Holistic Approach: We focus on nurturing not only academic excellence but also character development and personal growth.</li>
+                    <li><i class="fas fa-check-circle"></i> Innovative Teaching: Our dedicated faculty members employ innovative teaching methods to make learning engaging and effective.</li>
+                    <li><i class="fas fa-check-circle"></i> Diverse Community: Join a diverse and inclusive community that celebrates cultural diversity and encourages global perspectives.</li>
+                    <li><i class="fas fa-check-circle"></i> State-of-the-Art Facilities: Enjoy modern facilities, including well-equipped labs, libraries, and sports amenities.</li>
+                </ul>
+            </section>
+    </section>
+
+
+
+
+
+
+    <section class="program" id="academics">
+        <h2>(10+2) Science</h2>
+        <div class="container">
+            <div class="program-list">
+
+                <div class="program-info">
+                    <i class="fas fa-flask"></i>
+                    <h3>Course Duration</h3>
+                    <p>24 months</p>
+                    <p><strong>Class Schedule:</strong> Full-time</p>
+                    <p><strong>Class Hours:</strong> 9:00 AM - 5:00 PM</p>
+                    <p>Classes held from Sunday to Friday</p>
+                </div>
+
+                <div class="program-info">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Cost Range (NPR)</h3>
+                    <p>-</p>
+                </div>
+
+                <div class="program-info">
+                    <i class="fas fa-university"></i>
+                    <h3>Affiliated to</h3>
+                    <p><strong>National Examination Board (NEB)</strong></p>
+                    <p><strong>Accreditation:</strong> Fully accredited by the Ministry of Education, Nepal</p>
+                </div>
+
+                <div class="program-info">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>Course Description</h3>
+                    <p>Two-year program providing a foundation in science subjects such as physics, chemistry, biology, and mathematics.</p>
+                </div>
+
+                <div class="program-info">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>Career Opportunities</h3>
+                    <p>Engineering, Medicine, Agriculture, Forestry, Pharmaceuticals, Biotechnology, Research, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section class="teaching-methods">
+        <h2>Teaching Methods</h2>
+        <div class="container">
+            <div class="method-list">
+                <div class="method-info">
+                    <i class="fas fa-chalkboard"></i>
+                    <h3>Lectures</h3>
+                    <p>Engaging and informative classroom lectures.</p>
+                </div>
+
+                <div class="method-info">
+                    <i class="fas fa-flask"></i>
+                    <h3>Practical Sessions</h3>
+                    <p>Hands-on learning in well-equipped labs.</p>
+                </div>
+
+                <div class="method-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Field Visits</h3>
+                    <p>Exploring the real world through educational trips.</p>
+                </div>
+
+                <div class="method-info">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Assignments</h3>
+                    <p>Regular assignments to reinforce learning.</p>
+                </div>
+                    
+                <div class="method-info">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Project Works</h3>
+                    <p>Collaborative and creative project work.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="contact-container" id="contact">
+        <div class="contact-form">
+            <h2>Contact Us</h2>
+            <form id="contactForm">
+                <div class="input-container">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="input-container">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-container">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+            <div class="success-message" id="successMessage">Message sent successfully!</div>
+        </div>
+        <div class="contact-details">
+            <h2>Contact Details</h2>
+            <ul>
+                <li><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong>Tulsipur, Dang</li>
+                <li><i class="fas fa-phone"></i> <strong>Phone:</strong> +1 (123) 456-7890</li>
+                <li><i class="fas fa-envelope"></i> <strong>Email:</strong> info@tulsischool.com</li>
+            </ul>
+            <div id="map"></div>
+        </div>
+    </div>
+
+
+
+    <script>
+        // JavaScript for toggling the mobile menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+    </script>
+
+    <script>
+        const map = L.map('map').setView([28.134997053027465, 82.29635777114197], 70);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var contactForm = document.getElementById('contactForm');
+        var successMessage = document.getElementById('successMessage');
+
+        contactForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            successMessage.style.display = 'block';
+
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>
+
