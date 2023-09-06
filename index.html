@@ -661,29 +661,31 @@
             contactForm.reset();
         });
     </script>
+    
+    <script>
+        let prevScrollPos = window.pageYOffset;
 
-    let prevScrollPos = window.pageYOffset;
-
-        window.onscroll = function() {
-            const currentScrollPos = window.pageYOffset;
-        
-            if (prevScrollPos > currentScrollPos) {
-                // Scrolling up
-                document.getElementById("navbar").classList.add("fixed");
-            } else {
-                // Scrolling down
-                document.getElementById("navbar").classList.remove("fixed");
-            }
-        
-            // Check if scrolled to the top
-            if (currentScrollPos === 0) {
-                document.getElementById("navbar").style.backgroundColor = "transparent";
-            } else {
-                document.getElementById("navbar").style.backgroundColor = "white";
-            }
-        
-            prevScrollPos = currentScrollPos;
-        };
+            window.onscroll = function() {
+                const currentScrollPos = window.pageYOffset;
+            
+                if (prevScrollPos > currentScrollPos) {
+                    // Scrolling up
+                    document.getElementById("navbar").classList.add("fixed");
+                } else {
+                    // Scrolling down
+                    document.getElementById("navbar").classList.remove("fixed");
+                }
+            
+                // Check if scrolled to the top
+                if (currentScrollPos === 0) {
+                    document.getElementById("navbar").style.backgroundColor = "transparent";
+                } else {
+                    document.getElementById("navbar").style.backgroundColor = "white";
+                }
+            
+                prevScrollPos = currentScrollPos;
+            };
+    </script>
 
 </body>
 </html>
