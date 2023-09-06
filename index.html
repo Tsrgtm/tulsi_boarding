@@ -401,7 +401,7 @@
 </head>
 <body>
     <main id="home">
-        <header>
+        <header id="navbar">
             <div class="container">
                 <div class="logo">
                     <a href="#home">TBSS</a>
@@ -660,6 +660,25 @@
 
             contactForm.reset();
         });
+    </script>
+
+    <script>
+        let prevScrollPos = window.pageYOffset;
+
+            window.onscroll = function() {
+                const currentScrollPos = window.pageYOffset;
+            
+                if (prevScrollPos > currentScrollPos) {
+                    // Scrolling up
+                    document.getElementById("navbar").classList.add("fixed");
+                } else {
+                    // Scrolling down
+                    document.getElementById("navbar").classList.remove("fixed");
+                }
+            
+                prevScrollPos = currentScrollPos;
+            };
+
     </script>
 </body>
 </html>
