@@ -664,7 +664,6 @@
     
     <script>
         let prevScrollPos = window.pageYOffset;
-        let isAtTop = true;
             
         window.onscroll = function() {
             const currentScrollPos = window.pageYOffset;
@@ -673,9 +672,6 @@
                 // Scrolling up
                 document.getElementById("navbar").classList.add("fixed");
                 isAtTop = false;
-            }
-            elif (isAtTop) {
-                document.getElementById("navbar").classList.remove("fixed");
             }
             else {
                 // Scrolling down
